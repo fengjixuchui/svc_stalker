@@ -172,7 +172,32 @@ int main(int argc, char **argv, const char **envp){
 
     usleep(200 * 1000);
 
+    err = pongo_send_command(pongo_device, "stalker-getkernelv\n");
+
+    if(err < 0){
+        printf("pongo_send_command: %s\n", libusb_error_name(err));
+        libusb_release_interface(pongo_device, 0);
+        libusb_close(pongo_device);
+        libusb_exit(NULL);
+        return 1;
+    }
+
+    /* we may have had to pwn SEPROM, so wait a bit longer before we continue */
+    sleep(4);
+
     err = pongo_send_command(pongo_device, "stalker-prep\n");
+
+    if(err < 0){
+        printf("pongo_send_command: %s\n", libusb_error_name(err));
+        libusb_release_interface(pongo_device, 0);
+        libusb_close(pongo_device);
+        libusb_exit(NULL);
+        return 1;
+    }
+
+    usleep(800 * 1000);
+
+    err = pongo_send_command(pongo_device, "stalker-patch-ss\n");
 
     if(err < 0){
         printf("pongo_send_command: %s\n", libusb_error_name(err));

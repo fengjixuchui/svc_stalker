@@ -1,0 +1,9 @@
+#ifndef SLEH_SYNCHRONOUS_HIJACKER
+#define SLEH_SYNCHRONOUS_HIJACKER
+
+#define NUM_INSTRS_BEFORE_CACHE     (0)
+#define STALKER_CACHE_PTR_PTR       (-((4*NUM_INSTRS_BEFORE_CACHE)+8))
+
+#define ESR_EC_SVC_64               (0x15)
+
+#endif
